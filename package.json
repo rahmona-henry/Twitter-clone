@@ -1,0 +1,25 @@
+{
+  "name": "Twitter-clone",
+  "version": "1.0.0",
+  "description": "Step by step, building a clone of twitter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jess-of-the-woods/Twitter-clone.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jess-of-the-woods/Twitter-clone/issues"
+  },
+  "homepage": "https://github.com/jess-of-the-woods/Twitter-clone#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "hbs": "^4.0.0"
+  }
+}
