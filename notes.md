@@ -1,8 +1,8 @@
 Twitter
 
-Server side rendering
+Server side rendering --DONE
 
-User can post tweet
+User can post tweet --DONE
 
 User can view all tweets
 
