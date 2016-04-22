@@ -8,7 +8,7 @@ var bodyParser = require('body-parser')
 app.use(express.static("public"));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-app.use(bodyParser.urlencoded({ extended:true}))
+app.use(bodyParser.urlencoded({ extended:true }))
 
 
 
@@ -32,7 +32,14 @@ app.post('/newTweet', function (req, res) {
     res.send('success')
   })
   console.log('this is post knex:', req.body.tweeted)
+})
 
+app.get('/allTweets', function (req, res) {
+  knex.select().table('tweets')
+  .then(function(data) {
+    res.render('viewAllTweets', { data: data })
+    console.log('this is data: ', data)
+  })
 })
 
 app.listen(3000, function () {
