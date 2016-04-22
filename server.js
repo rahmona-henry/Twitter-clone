@@ -27,7 +27,10 @@ app.get('/', function (req, res) {
 
 app.post('/newTweet', function (req, res) {
     console.log('this is req.body:', req.body)
-  knex('tweets').insert({tweeted: 'req.body.tweeted'})
+  knex('tweets').insert({tweeted: req.body.tweeted})
+  .then(function(data){
+    res.send('success')
+  })
   console.log('this is post knex:', req.body.tweeted)
 
 })
