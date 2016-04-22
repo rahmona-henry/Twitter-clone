@@ -4,12 +4,13 @@ var app = express();
 var path = require('path');
 var knex = require('knex')
 var bodyParser = require('body-parser')
+var bcrypt = require('bcrypt')
+var session = require('express-session')
 
 app.use(express.static("public"));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(bodyParser.urlencoded({ extended:true }))
-
 
 
 var knex = require('knex')({
@@ -20,6 +21,13 @@ var knex = require('knex')({
   useNullAsDefault: true
 })
 
+app.use(session({
+  secret: 'ssshhhhhh! Top secret!',
+  saveUninitialized: true,
+  resave: true,
+  db: knex
+}))
+
 
 app.get('/', function (req, res) {
   res.render('tweetPost');
@@ -29,9 +37,11 @@ app.post('/newTweet', function (req, res) {
     console.log('this is req.body:', req.body)
   knex('tweets').insert({tweeted: req.body.tweeted})
   .then(function(data){
-    res.send('success')
+    // document.getElementById("form").reset()
+//    res.send('success')
+console.log('success')
   })
-  console.log('this is post knex:', req.body.tweeted)
+ // console.log('this is post knex:', req.body.tweeted)
 })
 
 app.get('/allTweets', function (req, res) {
@@ -47,12 +57,19 @@ app.get('/newUser', function (req, res) {
 });
 
 app.post('/newUser', function (req, res) {
-  knex('users').insert({ email: req.body.email, hashed_password: req.body.password })
+  var hash = bcrypt.hashSync( req.body.password, 10 )
+  knex('users').insert({ email: req.body.email, hashed_password: hash })
   .then(function(data){
-    res.send('success')
+    req.session.userId = data
+    res.redirect('/')
   })
-  console.log('req', req.body)
+  .catch(function(error){
+    console.log(error, 'problem')
+    req.session.userId = 0
+    res.redirect('/')
+  })
 })
+
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
