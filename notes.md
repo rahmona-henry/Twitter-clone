@@ -4,7 +4,7 @@ Server side rendering --DONE
 
 User can post tweet --DONE
 
-User can view all tweets
+User can view all tweets --DONE
 
 User can register
 
