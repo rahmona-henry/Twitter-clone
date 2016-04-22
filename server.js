@@ -42,6 +42,18 @@ app.get('/allTweets', function (req, res) {
   })
 })
 
+app.get('/newUser', function (req, res) {
+  res.render('signUp');
+});
+
+app.post('/newUser', function (req, res) {
+  knex('users').insert({ email: req.body.email, hashed_password: req.body.password })
+  .then(function(data){
+    res.send('success')
+  })
+  console.log('req', req.body)
+})
+
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
