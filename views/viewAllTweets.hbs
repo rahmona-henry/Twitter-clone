@@ -8,14 +8,14 @@
   </style>
 </head>
 <body>
-<h2>All Creets</h2>
+<h6>User #{{id}}</h6>
+<h2>All o' the Creets</h2>
 <div>
 {{#each data}}
-  <p>User {{this.id}} {{this.tweeted}}</p>
+  <p>User {{this.id}} - {{this.tweeted}}</p>
 {{/each}}
 </div>
-<a href="/newTweet">Post a Creet</a><br>
-<br>
+<a href="/newTweet">Post a Creet</a> |
 <a href="/signOut">Sign Out</a>
 </body>
 </html>

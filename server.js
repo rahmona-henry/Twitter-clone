@@ -30,6 +30,9 @@ app.use(session({
   db: knex
 }))
 
+//=========================================//
+//========== GET routes ===================//
+//=========================================//
 
 app.get('/', function (req, res) {
   res.render('signIn');
@@ -37,6 +40,7 @@ app.get('/', function (req, res) {
 
 app.get('/newTweet', function(req, res) {
   res.render('tweetPost', {id: req.session.userId})
+//  console.log('this is req.session: ', req.session)
 })
 
 app.get('/signUp', function (req, res) {
@@ -54,30 +58,26 @@ app.get('/secret', function(req, res){
 app.get('/allTweets', function (req, res) {
   knex.select().table('tweets')
   .then(function(data) {
-    res.render('viewAllTweets', { data: data })
-     for (i = 0; i < data.length; i++){
-       console.log(data[i].id)
-       console.log(data[i].tweeted)
-     }
-//         console.log('this is data: ', data)
+    res.render('viewAllTweets', { id: req.session.userId, data: data })
   })
 })
 
 app.get('/signOut', function (req, res) {
-  // Add logout code here
   req.session.destroy()
-  res.redirect('/signIn')
+  res.render('signOut');
 })
 
+//=========================================//
+//============= POST routes ===============//
+//=========================================//
+
 app.post('/newTweet', function (req, res) {
-    console.log('this is req.body:', req.body)
+    // console.log('this is req.body:', req.body)
   knex('tweets').insert({tweeted: req.body.tweeted})
   .then(function(data){
-    // document.getElementById("form").reset()
-//    res.send('success')
-console.log('success')
+    res.redirect('allTweets')
+    console.log('success')
   })
- // console.log('this is post knex:', req.body.tweeted)
 })
 
 app.post('/signIn', function(req, res){
@@ -97,20 +97,20 @@ app.post('/signIn', function(req, res){
       }
       else {
         res.redirect('/signIn')
-        console.log('else')
       }
     })
     .catch(function(error){
-      console.log('problem: ', error)
+      console.log('there has been a problem: ', error)
       req.session.userId = 0
       res.redirect('/signUp')
     })
   })
 
-app.post('/newUser', function (req, res) {
+app.post('/signUp', function (req, res) {
   var hash = bcrypt.hashSync( req.body.password, 10 )
   knex('users').insert({ email: req.body.email, hashed_password: hash })
   .then(function(data){
+    console.log('this is data from sign-up', data)
     req.session.userId = data
     res.redirect('/')
   })
@@ -121,7 +121,6 @@ app.post('/newUser', function (req, res) {
   })
 })
 
-
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+  console.log('Example app listening on port 3000! Yep! Its true!');
 });
