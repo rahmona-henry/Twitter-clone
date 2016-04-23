@@ -1,17 +1,22 @@
 <html>
 <head>
-  <title>Sign up to Critter</title>
+  <title>Sign Up to Critter</title>
+  <style>
+	body {
+		background-color: #d8d8d8;
+	}
+  </style>
 </head>
 <body>
 <h2>Sign Up to Critter!</h2>
-<form action='/newUser' method='POST'>
-  <input type='text' placeholder="email"name='email'></input>
+<form action='/signUp' method='POST'>
+  <input type='text' placeholder="email" name='email'></input>
   <input type='password' placeholder="password" name='password'></input>
   <input type='submit' value='submit'></input>
 </form>
 <a href="/">Post a Creet</a><br>
 <br>
-<a href="/allTweets">View All Creets</a><br>
-<!-- <a href='/signIn'>Sign In</a> -->
+<br>
+<a href="/signIn">Sign In</a><br><!-- <a href='/signIn'>Sign In</a> -->
 </body>
 </html>

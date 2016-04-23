@@ -1,9 +1,14 @@
 <html>
 <head>
   <title>Post a new Creet</title>
+  <style>
+	body {
+		background-color: #d8d8d8;
+	}
+  </style>
 </head>
 <body>
-<h2>Welcome to Critter Clone, soon to replace Twitter</h2>
+<h2>Welcome to Critter friend number {{id}}, soon to replace Twitter</h2>
 <h3>Post a new creet</h3>
 <form action='/newTweet' method='POST'>
   <input type='text' name='tweeted' placeholder="creet here"> </input>
@@ -11,6 +16,5 @@
 </form>
 <a href="/allTweets">View All Creets</a><br>
 <br>
-<a href="/newUser">Sign Up to Critter</a> 
 </body>
 </html>
