@@ -2,18 +2,23 @@
 <head>
   <title>Sign In to Critter</title>
   <style>
-	body {
-		background-color: #d8d8d8;
-	}
+  body {
+    color: white;
+    background-color: #595B61;
+  }
+  input {
+    background-color: #d8d8d8;
+  }
   </style>
 </head>
 <body>
-<h2>Sign In to Critter!</h2>
-<form action='/signIn' method='POST'>
-  <input type='text' placeholder="email" name='email' autofocus></input>
-  <input type='password' placeholder="password" name='password'></input>
-  <input type='submit'></input>
-</form>
-<a href='/signUp'>Sign Up</a>
+  <h2>Sign In to Critter!</h2>
+  <form action='/signIn' method='POST'>
+    <input type='text' placeholder="email" name='email' autofocus></input>
+    <input type='password' placeholder="password" name='password'></input>
+    <input type='submit' value='submit'></input>
+  </form>
+  <a href='/signUp'>Sign Up</a>
+  <link rel="stylesheet" type="text/css" href="../main.css"></link>
 </body>
 </html>
