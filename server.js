@@ -3,13 +3,12 @@ var config = require('./config.js')
 var knex = config.knex
 var app = config.app
 
-
 //=========================================//
 //========== GET routes ===================//
 //=========================================//
 
 app.get('/', function (req, res) {
-  if (!this.req.session.userId) {
+  if (!req.session.userId) {
     res.render('signIn');
   } else {
     res.render('secret', { id: req.session.userId })
@@ -41,14 +40,6 @@ app.get('/allTweets', function (req, res) {
     .then(function(data) {
       res.render('viewAllTweets', { id: req.session.userId, data: data })
     })
-  }  
-})
-
-app.get('/', function(req, res) {
-  if (!this.req.session.userId) {
-    redirect '/somewhere'
-  } else {
-    //do something interesting
   }
 })
 
