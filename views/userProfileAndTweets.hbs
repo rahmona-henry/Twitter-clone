@@ -8,11 +8,11 @@
   </style>
 </head>
 <body>
-<h5>User #{{userId}}'s profile</h5>
-<h2>Creets</h2>
+<h1>User #{{userId}}'s profile</h1>
+<h2>Their creets:</h2>
 <div>
 {{#each data}}
-  <p>{{this.tweeted}}</p>
+  <p>"{{this.tweeted}}"</p>
 {{/each}}
 </div>
 <a href="/newTweet">Post a Creet</a> |

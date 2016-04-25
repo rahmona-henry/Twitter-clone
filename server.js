@@ -51,7 +51,14 @@ app.get('/user/:id', function (req, res) {
   knex('tweets').where('userId', req.params.id)
   .then(function(data) {
     // console.log(data)
-    res.render('userProfileAndTweets', { data: data } )
+    res.render('userProfileAndTweets', { userId: req.params.id, data: data } )
+  })
+})
+
+app.get('/user/:id/follow', function(req, res){
+  knex('follows').insert({followerId: req.session.userId, followingId: req.params.id})
+  .then(function(data){
+    console.log('success (bam!)')
   })
 })
 
@@ -79,7 +86,6 @@ app.post('/signIn', function(req, res){
   knex('users').where('email', req.body.email)
     .then(function(data) {
       console.log('data[0].id', data[0].id)
-      // console.log('data', data)
       if (bcrypt.compareSync( req.body.password, data[0].hashed_password )) {
         req.session.userId = data[0].id
         res.redirect('/secret')
