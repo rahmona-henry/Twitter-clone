@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>All Creets</title>
+  <title>User #{{userId}}'s profile</title>
   <style>
 	body {
 		background-color: #d8d8d8;
@@ -8,11 +8,11 @@
   </style>
 </head>
 <body>
-<h5>User #{{userId}}</h5>
-<h2>All o' the Creets</h2>
+<h5>User #{{userId}}'s profile</h5>
+<h2>Creets</h2>
 <div>
 {{#each data}}
-  <p>User #{{userId}} - {{this.tweeted}}</p>
+  <p>{{this.tweeted}}</p>
 {{/each}}
 </div>
 <a href="/newTweet">Post a Creet</a> |

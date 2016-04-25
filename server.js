@@ -41,10 +41,20 @@ app.get('/allTweets', function (req, res) {
   } else {
     knex.select().table('tweets')
     .then(function(data) {
-      res.render('viewAllTweets', { id: req.session.userId, data: data })
+      res.render('viewAllTweets', { userId: req.session.userId, data: data })
     })
   }
 })
+
+app.get('/user/:id', function (req, res) {
+  // console.log('req.params: ', req.params)
+  knex('tweets').where('userId', req.params.id)
+  .then(function(data) {
+    // console.log(data)
+    res.render('userProfileAndTweets', { data: data } )
+  })
+})
+
 
 app.get('/signOut', function (req, res) {
   req.session.destroy()
@@ -57,7 +67,8 @@ app.get('/signOut', function (req, res) {
 
 app.post('/newTweet', function (req, res) {
     // console.log('this is req.body:', req.body)
-  knex('tweets').insert({ tweeted: req.body.tweeted })
+    console.log('req.session: ', req.session)
+  knex('tweets').insert({ tweeted: req.body.tweeted, userId: req.session.userId })
   .then(function(data){
     res.redirect('allTweets')
     console.log('success')
@@ -65,13 +76,10 @@ app.post('/newTweet', function (req, res) {
 })
 
 app.post('/signIn', function(req, res){
-  knex.select().table('users')
+  knex('users').where('email', req.body.email)
     .then(function(data) {
-      console.log('data', data[0].id)
-      // console.log(data)
-      // for (i = 0; i < data.length; i++){
-      //   console.log(data[i].hashed_password)
-      // }
+      console.log('data[0].id', data[0].id)
+      // console.log('data', data)
       if (bcrypt.compareSync( req.body.password, data[0].hashed_password )) {
         req.session.userId = data[0].id
         res.redirect('/secret')
