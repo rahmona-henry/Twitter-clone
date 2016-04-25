@@ -12,11 +12,12 @@
 <h2>Their creets:</h2>
 <div>
 {{#each data}}
-  <p> - "{{this.tweeted}}"</p>
+  <p> * "{{this.tweeted}}"</p>
 {{/each}}
 </div>
-<a href='/user/{{userId}}/follow'>Follow this Cretin</a> |
+<a href='/user/{{userId}}/follow'>Follow</a> |
 <a href="/newTweet">Post a Creet</a> |
+<a href='/allTweets'>View All</a> |
 <a href="/signOut">Sign Out</a>
 
 </body>
