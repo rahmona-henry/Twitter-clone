@@ -9,15 +9,18 @@ var app = config.app
 
 app.get('/', function (req, res) {
   if (!req.session.userId) {
-    res.render('signIn');
+    res.redirect('/signIn');
   } else {
     res.render('secret', { id: req.session.userId })
   }
 })
 
 app.get('/newTweet', function(req, res) {
-  res.render('tweetPost', { id: req.session.userId })
-//  console.log('this is req.session: ', req.session)
+  if (!req.session.userId) {
+    res.redirect('/signIn');
+  } else {
+    res.render('tweetPost', { id: req.session.userId })
+  }
 })
 
 app.get('/signUp', function (req, res) {
@@ -33,7 +36,7 @@ app.get('/secret', function(req, res){
 })
 
 app.get('/allTweets', function (req, res) {
-  if (!this.req.session.userId) {
+  if (!req.session.userId) {
     res.redirect('/signIn')
   } else {
     knex.select().table('tweets')
