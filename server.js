@@ -32,7 +32,11 @@ app.get('/signIn', function (req, res) {
 });
 
 app.get('/secret', function(req, res){
+  if (!req.session.userId) {
+    res.redirect('/signIn')
+  } else {
     res.render('secret', { userId: req.session.userId })
+  }
 })
 
 app.get('/allTweets', function (req, res) {
@@ -47,12 +51,14 @@ app.get('/allTweets', function (req, res) {
 })
 
 app.get('/user/:id', function (req, res) {
-  // console.log('req.params: ', req.params)
+  if (!req.session.userId) {
+    res.redirect('/signIn')
+  } else {
   knex('tweets').where('userId', req.params.id)
-  .then(function(data) {
-    // console.log(data)
-    res.render('userProfileAndTweets', { userId: req.params.id, data: data } )
-  })
+    .then(function(data) {
+      res.render('userProfileAndTweets', { userId: req.params.id, data: data })
+    })
+  }
 })
 
 app.get('/user/:id/follow', function(req, res){
@@ -61,7 +67,6 @@ app.get('/user/:id/follow', function(req, res){
     console.log('success. (bam!)')
   })
 })
-
 
 app.get('/signOut', function (req, res) {
   req.session.destroy()
@@ -82,12 +87,25 @@ app.post('/newTweet', function (req, res) {
   })
 })
 
+app.post('/signUp', function (req, res) {
+  var hash = bcrypt.hashSync( req.body.password, 10 )
+  knex('users').insert({ email: req.body.email, hashed_password: hash })
+  .then(function(data){
+    console.log('this is "data" from sign-up', data)
+    req.session.userId = data
+    res.redirect('/secret')
+  })
+  .catch(function(error){
+    console.log(error, 'problem')
+    req.session.userId = 0
+    res.redirect('/')
+  })
+})
+
 app.post('/signIn', function(req, res){
   knex('users').where('email', req.body.email)
     .then(function(data) {
-      console.log('this is data: ', data)
-  //    console.log('data[0].id:', data[0].id)
-  //    console.log('req.body.password: ', req.body.password)
+      console.log('this is "data" from sign in: ', data)
       if (bcrypt.compareSync( req.body.password, data[0].hashed_password )) {
         req.session.userId = data[0].id
         res.redirect('/secret')
@@ -104,21 +122,6 @@ app.post('/signIn', function(req, res){
       res.redirect('/signUp')
     })
   })
-
-app.post('/signUp', function (req, res) {
-  var hash = bcrypt.hashSync( req.body.password, 10 )
-  knex('users').insert({ email: req.body.email, hashed_password: hash })
-  .then(function(data){
-    console.log('this is "data" from sign-up', data)
-    req.session.userId = data
-    res.redirect('/secret')
-  })
-  .catch(function(error){
-    console.log(error, 'problem')
-    req.session.userId = 0
-    res.redirect('/')
-  })
-})
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000! Yep! Its true!');
