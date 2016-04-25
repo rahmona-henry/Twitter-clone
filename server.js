@@ -9,8 +9,12 @@ var app = config.app
 //=========================================//
 
 app.get('/', function (req, res) {
-  res.render('signIn');
-});
+  if (!this.req.session.userId) {
+    res.render('signIn');
+  } else {
+    res.render('secret', { id: req.session.userId })
+  }
+})
 
 app.get('/newTweet', function(req, res) {
   res.render('tweetPost', { id: req.session.userId })
@@ -30,10 +34,22 @@ app.get('/secret', function(req, res){
 })
 
 app.get('/allTweets', function (req, res) {
-  knex.select().table('tweets')
-  .then(function(data) {
-    res.render('viewAllTweets', { id: req.session.userId, data: data })
-  })
+  if (!this.req.session.userId) {
+    res.redirect('/signIn')
+  } else {
+    knex.select().table('tweets')
+    .then(function(data) {
+      res.render('viewAllTweets', { id: req.session.userId, data: data })
+    })
+  }  
+})
+
+app.get('/', function(req, res) {
+  if (!this.req.session.userId) {
+    redirect '/somewhere'
+  } else {
+    //do something interesting
+  }
 })
 
 app.get('/signOut', function (req, res) {
