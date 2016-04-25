@@ -28,6 +28,7 @@ app.use(session({
   resave: true,
   store: store
 }))
+app.knex = knex
 
 module.exports = {
   app: app,
