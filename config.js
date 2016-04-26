@@ -7,7 +7,7 @@ var path = require('path');
 var knex = require('knex')
 var bodyParser = require('body-parser')
 
-app.use(express.static("public"));
+app.use(express.static("views"));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(bodyParser.urlencoded({ extended:true }))

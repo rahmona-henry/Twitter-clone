@@ -1,25 +1,20 @@
 <html>
 <head>
   <title>Cretin #{{userId}}'s profile</title>
-  <style>
-  body {
-    color: white;
-    background-color: #595B61;
-  }
-  </style>
 </head>
 <body>
-<h1>Cretin #{{userId}}'s profile</h1>
-<h2>Their creets:</h2>
-<div>
-{{#each data}}
-  <p> * "{{this.tweeted}}"</p>
-{{/each}}
-</div>
-<a href='/user/{{userId}}/follow'>Follow</a> |
-<a href="/newTweet">Post a Creet</a> |
-<a href='/allTweets'>View All</a> |
-<a href="/signOut">Sign Out</a>
-
+  <h1>Cretin #{{userId}}'s profile</h1>
+  <h2>Their creets:</h2>
+  <div>
+  {{#each data}}
+    <p> * "{{this.tweeted}}"</p>
+  {{/each}}
+  </div>
+  <a href='/user/{{userId}}/follow'>Follow</a> |
+  <a href="/newTweet">Post a Creet</a> |
+  <a href='/allTweets'>View All</a> |
+  <a href="/signOut">Sign Out</a>
+  <br>
+  <link rel='stylesheet' type='text/css' href='main.css'></link>
 </body>
 </html>
