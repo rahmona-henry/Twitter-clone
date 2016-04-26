@@ -103,6 +103,8 @@ app.post('/signUp', function (req, res) {
 })
 
 app.post('/signIn', function(req, res){
+  console.log(req.body.email, 'email')
+  console.log(req.body.password, 'password')
   knex('users').where('email', req.body.email)
     .then(function(data) {
       console.log('this is "data" from sign in: ', data)
@@ -123,4 +125,4 @@ app.post('/signIn', function(req, res){
     })
   })
 
-module.exports= app
+module.exports = app
