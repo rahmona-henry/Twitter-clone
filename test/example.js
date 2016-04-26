@@ -55,16 +55,26 @@ test('view sign in form', function(t) {
 })
 
 test('signing in w/ correct email & pswd redirects to /secret', function(t){
+
+  user = {email: 'testing.is.fun@gmail.com', password: 'password'}
   request(app)
-    .post('/signIn')
+    .post('/signUp')
     .type('form')
-    .send({ email: 'what.the.dickenss@gmail.com', password: 'yes' })
-    .end(function(err,res){
-      t.equals(res.status, 302, 'response is redirect')
-      t.equals(res.header.location, '/secret', 'redirects to secret page')
-      t.end()
-//      t.equals(res. )
-    })
+    .send(user)
+    .end(function() {
+      request(app)
+        .post('/signIn')
+        .type('form')
+        .send(user)
+        .end(function(err,res){
+          t.equals(res.status, 302, 'response is redirect')
+          t.equals(res.header.location, '/secret', 'redirects to secret page')
+          knex('users').del().then(function() {
+            t.end()
+          })
+    //      t.equals(res. )
+        })
+  })
 })
 
 // test('basic testing on twitter server', function(t){
