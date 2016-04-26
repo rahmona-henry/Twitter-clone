@@ -1,7 +1,15 @@
 var request = require('supertest')
 var test = require('tape')
 var cheerio = require('cheerio')
-var app = require('../app')
+
+var knex = require('knex')({
+  client: 'sqlite3',
+  connection: {
+    filename: './test.sqlite3'
+  },
+  useNullAsDefault: true
+})
+var app = require('../app')(knex)
 
 test('visiting home page redirects to sign in', function(t) {
   request(app)

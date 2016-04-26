@@ -4,7 +4,7 @@
   "description": "Step by step, building a clone of twitter",
   "main": "index.js",
   "scripts": {
-    "test": "tape test/example.js | tap-spec" ,
+    "test": "knex migrate:latest --env test && tape test/example.js | tap-spec" ,
     "start": "nodemon ./server.js"
   },
   "repository": {
