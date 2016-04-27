@@ -69,7 +69,6 @@ module.exports = function(knex) {
   })
 
   app.get('/allFollowing/:id', function (req, res) {
-//      knex('users').where
       knex.from('follows').innerJoin('users', 'id', 'followerId').where( 'followerId', req.params.id )
       .then(function(data) {
         res.render('follows', { userId: req.params.id, data: data })
@@ -86,8 +85,6 @@ module.exports = function(knex) {
   //=========================================//
 
   app.post('/newTweet', function (req, res) {
-      // console.log('this is req.body:', req.body)
-      // console.log('req.session: ', req.session)
     knex('tweets').insert({ tweeted: req.body.tweeted, userId: req.session.userId })
     .then(function(data){
       res.redirect('allTweets')
