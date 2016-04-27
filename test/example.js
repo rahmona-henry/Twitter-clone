@@ -3,9 +3,9 @@ var test = require('tape')
 var cheerio = require('cheerio')
 
 var knex = require('knex')({
-  client: 'sqlite3',
+  client: 'pg',
   connection: {
-    filename: './test.sqlite3'
+    database: 'twitter_clone_test'
   },
   useNullAsDefault: true
 })

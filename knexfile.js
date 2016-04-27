@@ -3,15 +3,15 @@
 module.exports = {
 
   development: {
-    client: 'sqlite3',
+    client: 'pg',
     connection: {
-      filename: './dev.sqlite3'
+      database: 'twitter_clone_dev'
     }
   },
   test: {
-    client: 'sqlite3',
+    client: 'pg',
     connection: {
-      filename: './test.sqlite3'
+      database: 'twitter_clone_test'
     }
   },
 
