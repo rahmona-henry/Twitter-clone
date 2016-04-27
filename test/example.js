@@ -86,6 +86,19 @@ test('signing in w/ blank fields redirects to /signIn', function(t){
     })
  })
 
+ test('user can post a creet', function(t){
+   user = {email: '', password: ''}
+   request(app)
+     .post('/signIn')
+     .type('form')
+     .send(user)
+     .end(function(err, res) {
+       t.equals(res.status, 302, 'response is redirect')
+       t.equals(res.header.location, '/signIn', 'redirects to sign in page')
+        t.end()
+     })
+  })
+
 //we need this to close the database after all the tests have run
 //what happens if you delete it?
 test('END', function(t) {
