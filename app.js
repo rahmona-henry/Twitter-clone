@@ -95,7 +95,8 @@ module.exports = function(knex) {
     knex('users').insert({ email: req.body.email, hashed_password: hash })
     .then(function(data){
       console.log('this is "data" from sign-up', data)
-      req.session.userId = data
+      console.log("this is data[0]: ", data[0])
+      req.session.userId = data[0]
       res.redirect('/secret')
     })
     .catch(function(error){
@@ -117,6 +118,7 @@ module.exports = function(knex) {
         }
         else if (bcrypt.compareSync( req.body.password, data[0].hashed_password )) {
           req.session.userId = data[0].id
+          // console.log("this is data[0].id: ", data[0].id)
           res.redirect('/secret')
           console.log('success! sign in happened by cretin #' + req.session.userId +'!')
         }
