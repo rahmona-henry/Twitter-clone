@@ -1,8 +1,8 @@
 
 var knex = require('knex')({
-  client: 'sqlite3',
+  client: 'pg',
   connection: {
-    filename: './dev.sqlite3'
+    database: 'twitter_clone_dev'
   },
   useNullAsDefault: true
 })
