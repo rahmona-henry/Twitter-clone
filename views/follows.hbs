@@ -1,0 +1,18 @@
+<html>
+<head>
+  <title>Cretin #{{userId}} follows:</title>
+  <link rel='stylesheet' type='text/css' href='../main.css'></link>
+
+</head>
+<body>
+  <h1>Cretin #{{userId}}</h1>
+  <h2>Follows: </h2>
+  <div>
+    {{#each data}}
+      <p> * "{{this.followingId}}"</p>
+    {{/each}}
+  </div>
+  <a href="/newTweet">Post a Creet</a> |
+  <a href="/signOut">Sign Out</a>
+</body>
+</html>
