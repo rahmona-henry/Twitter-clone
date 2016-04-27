@@ -88,6 +88,9 @@ module.exports = function(knex) {
   })
 
   app.post('/signUp', function (req, res) {
+    if (req.body.email === '') {
+      res.redirect('/signUp')
+    }
     var hash = bcrypt.hashSync( req.body.password, 10 )
     knex('users').insert({ email: req.body.email, hashed_password: hash })
     .then(function(data){
@@ -104,12 +107,16 @@ module.exports = function(knex) {
   })
 
   app.post('/signIn', function(req, res){
-    console.log(req.body.email, 'email')
-    console.log(req.body.password, 'password')
+//    var email = document.getElementBy
+    console.log('email', req.body.email)
+    console.log('password', req.body.password)
     knex('users').where('email', req.body.email)
       .then(function(data) {
         console.log('this is "data" from sign in: ', data)
-        if (bcrypt.compareSync( req.body.password, data[0].hashed_password )) {
+        if ( req.body.email === '' ) {
+          res.redirect('/signIn')
+        }
+        else if (bcrypt.compareSync( req.body.password, data[0].hashed_password )) {
           req.session.userId = data[0].id
           // console.log("this is data[0].id: ", data[0].id)
           res.redirect('/secret')
