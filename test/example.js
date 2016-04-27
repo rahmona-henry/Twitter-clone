@@ -74,6 +74,27 @@ test('signing in w/ correct email & pswd redirects to /secret', function(t){
   })
 })
 
+
+  test('userID is assigned to a user when they sign-up', function(t){
+    user = {email: 'testing.is.fun@gmail.com', password: 'password'}
+    request(app)
+      .post('/signUp')
+      .type('form')
+      .send(user)
+      .end(function(err, res) {
+        knex('users').where({email:'testing.is.fun@gmail.com'}).select('id')
+        .then(function(data){
+          console.log('data', data)
+            t.equals(typeof data[0].id,'number','UserId assigned from data is a number')
+            knex('users').del().then(function() {
+               t.end()
+             })
+        })
+      })
+  })
+
+
+
 //we need this to close the database after all the tests have run
 //what happens if you delete it?
 test('END', function(t) {

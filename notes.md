@@ -6,8 +6,8 @@ User can post tweet --DONE
 
 User can view all tweets --DONE
 
-User can register
+User can register --DONE
 
-User can follow another user
+User can follow another user --DONE
 
 User can view tweets from people they follow
