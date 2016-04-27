@@ -46,14 +46,13 @@ test('view sign in form', function(t) {
     .get('/signIn')
     .end(function(err, res) {
       $ = cheerio.load(res.text)
-      t.equals($('a').text(), "Sign Up", 'text inside a tag is "Sign Up"' )
+      t.equals($('a').text(), "Sign Up", 'text inside "a" tag is "Sign Up"' )
       //can you test some things about the form with cheerio
       t.end()
     })
 })
 
 test('signing in w/ correct email & pswd redirects to /secret', function(t){
-
   user = {email: 'testing.is.fun@gmail.com', password: 'password'}
   request(app)
     .post('/signUp')
@@ -73,6 +72,19 @@ test('signing in w/ correct email & pswd redirects to /secret', function(t){
         })
   })
 })
+
+test('signing in w/ blank fields redirects to /signIn', function(t){
+  user = {email: '', password: ''}
+  request(app)
+    .post('/signIn')
+    .type('form')
+    .send(user)
+    .end(function(err, res) {
+      t.equals(res.status, 302, 'response is redirect')
+      t.equals(res.header.location, '/signIn', 'redirects to sign in page')
+       t.end()
+    })
+ })
 
 //we need this to close the database after all the tests have run
 //what happens if you delete it?
