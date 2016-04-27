@@ -1,14 +1,15 @@
 
 var knex = require('knex')({
   client: 'pg',
-  connection: {
+  connection: process.env.DATABASE_URL || {
     database: 'twitter_clone_dev'
   },
   useNullAsDefault: true
 })
 
 var app = require('./app')(knex)
+var port = process.env.PORT || 3000
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000! Yep! Its true!');
+app.listen(port, function () {
+  console.log('Example app listening on port ' + port + '! Yep! Its true!');
 });
