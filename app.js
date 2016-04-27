@@ -64,8 +64,16 @@ module.exports = function(knex) {
   app.get('/user/:id/follow', function(req, res){
     knex('follows').insert({followerId: req.session.userId, followingId: req.params.id})
     .then(function(data){
-      console.log('success. (bam!)')
+      console.log('success!' + req.session.userId + 'follows' + req.params.id + '(bam!)')
     })
+  })
+
+  app.get('/allFollowing/:id', function (req, res) {
+//      knex('users').where
+      knex.from('follows').innerJoin('users', 'id', 'followerId').where( 'followerId', req.params.id )
+      .then(function(data) {
+        res.render('follows', { userId: req.params.id, data: data })
+      })
   })
 
   app.get('/signOut', function (req, res) {
@@ -107,9 +115,6 @@ module.exports = function(knex) {
   })
 
   app.post('/signIn', function(req, res){
-//    var email = document.getElementBy
-    console.log('email', req.body.email)
-    console.log('password', req.body.password)
     knex('users').where('email', req.body.email)
       .then(function(data) {
         console.log('this is "data" from sign in: ', data)
